@@ -1,4 +1,4 @@
-# NolHome — Home Media Centre
+# nol-my-homecenter — Home Media Centre
 
 Домашняя настенная панель для старого Android-планшета: нативное приложение на Java и собственный сервер на PHP + MySQL. Основное устройство разработки — ASUS Transformer Pad TF303CL / K014 с Android 4.4.2. Текущая версия клиента — **0.12.35**.
 
@@ -48,4 +48,4 @@ HTTP поддерживается для домашней сети только 
 
 Собственный код проекта распространяется под [MIT](LICENSE). Шрифты, Gradle Wrapper, публичный корневой сертификат и зависимости сохраняют свои условия: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Использование погодных данных, котировок и радиопотоков регулируется также условиями их поставщиков.
 
-Публичный Git-адрес: [alexnolmann/nolhome](https://github.com/alexnolmann/nolhome).
+Публичный Git-адрес: [alexnolmann/nol-my-homecenter](https://github.com/alexnolmann/nol-my-homecenter).

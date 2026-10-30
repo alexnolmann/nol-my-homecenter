@@ -13,7 +13,7 @@ final class CurlTransport implements Transport
            ($host==='iss.moex.com'?!preg_match('~^/iss/engines/stock/markets/shares/boards/[A-Z0-9_-]{1,32}/securities(?:/[A-Z0-9._-]{1,32})?\.json$~D',$path):
            ($host==='weather.visualcrossing.com'?!preg_match('~^/VisualCrossingWebServices/rest/services/timeline/-?[0-9]+(?:\.[0-9]{1,6})?,-?[0-9]+(?:\.[0-9]{1,6})?$~D',$path):!in_array($path,$allowed[$host],true))))throw new \InvalidArgumentException('Fixed official HTTPS endpoint required.');
         $response=new ResponseBuffer();$curl=curl_init($url);$this->requests++;
-        curl_setopt_array($curl,[CURLOPT_CONNECTTIMEOUT=>4,CURLOPT_TIMEOUT=>15,CURLOPT_FOLLOWLOCATION=>false,CURLOPT_SSL_VERIFYPEER=>true,CURLOPT_SSL_VERIFYHOST=>2,CURLOPT_PROTOCOLS=>CURLPROTO_HTTPS,CURLOPT_ENCODING=>'',CURLOPT_USERAGENT=>'MediaCentre/0.8 (+https://github.com/alexnolmann/nolhome)',
+        curl_setopt_array($curl,[CURLOPT_CONNECTTIMEOUT=>4,CURLOPT_TIMEOUT=>15,CURLOPT_FOLLOWLOCATION=>false,CURLOPT_SSL_VERIFYPEER=>true,CURLOPT_SSL_VERIFYHOST=>2,CURLOPT_PROTOCOLS=>CURLPROTO_HTTPS,CURLOPT_ENCODING=>'',CURLOPT_USERAGENT=>'MediaCentre/0.8 (+https://github.com/alexnolmann/nol-my-homecenter)',
             CURLOPT_HEADERFUNCTION=>static fn($handle,string $line):int=>$response->header($line),
             CURLOPT_WRITEFUNCTION=>static fn($handle,string $chunk):int=>$response->append($chunk)]);
         try{

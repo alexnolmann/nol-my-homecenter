@@ -37,7 +37,7 @@ final class MetNorwayWeatherClient implements PanelRepository.WeatherSource {
         HttpsURLConnection connection=(HttpsURLConnection)new URL(endpoint).openConnection();
         connection.setSSLSocketFactory(new Tls12SocketFactory(trustedFactory()));
         connection.setConnectTimeout(4000);connection.setReadTimeout(12000);connection.setInstanceFollowRedirects(false);
-        connection.setRequestProperty("Accept","application/json");connection.setRequestProperty("User-Agent","MediaCentre/0.8 (+https://github.com/alexnolmann/nolhome)");
+        connection.setRequestProperty("Accept","application/json");connection.setRequestProperty("User-Agent","MediaCentre/0.8 (+https://github.com/alexnolmann/nol-my-homecenter)");
         try {
             if(connection.getResponseCode()!=200)throw new IOException("Weather source HTTP "+connection.getResponseCode());
             if(connection.getContentLength()>MAX_RESPONSE)throw new IOException("Weather response too large.");
