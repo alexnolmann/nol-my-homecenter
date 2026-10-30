@@ -1,5 +1,6 @@
 # Документация
 
+- [Сопровождение установки агентом](../AGENTS.md) и [пошаговые команды](agent-installation.md)
 - [Установка и первое подключение](getting-started.md)
 - [OSPanel / Windows](deployment/os-panel.md)
 - [Контейнерный шаблон](deployment/docker.md)
