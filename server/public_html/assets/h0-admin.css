@@ -1,0 +1,22 @@
+:root { color-scheme: light; font-family: "Segoe UI", Arial, sans-serif; color: #213333; background: #edf2ef; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { max-width: 1050px; margin: 0 auto; padding: 48px 24px; }
+.eyebrow { color: #587b6b; font-size: 13px; letter-spacing: .16em; font-weight: 700; }
+h1 { font-size: clamp(30px, 5vw, 46px); margin: 12px 0; letter-spacing: -.025em; }
+h2 { font-size: 21px; margin: 0 0 18px; }
+.intro { font-size: 18px; color: #566660; }
+aside { padding: 18px 22px; border-left: 4px solid #94b7a5; background: #dde9e2; border-radius: 5px; margin: 26px 0; line-height: 1.6; }
+section { margin: 18px 0; padding: 26px; background: #fff; border: 1px solid #d9e3dd; border-radius: 14px; }
+dl { margin: 0; }
+dl div { display: grid; grid-template-columns: 210px 1fr; padding: 13px 0; border-bottom: 1px solid #edf1ed; gap: 18px; }
+dl div:last-child { border-bottom: none; }
+dt { color: #63716a; }
+dd { margin: 0; overflow-wrap: anywhere; line-height: 1.5; }
+a { color: #286f57; text-underline-offset: 3px; }
+.badge { display: inline-block; font-size: 12px; border-radius: 16px; padding: 3px 10px; margin-left: 10px; }
+.ok { background: #e0f1e7; color: #286a45; }
+.pending { background: #f4ead7; color: #7e6030; }
+.note, footer { color: #64736b; line-height: 1.6; font-size: 14px; }
+footer { margin-top: 30px; }
+@media (max-width: 640px) { main { padding: 24px 14px; } section { padding: 20px; } dl div { grid-template-columns: 1fr; gap: 6px; } .badge { margin-left: 4px; } }

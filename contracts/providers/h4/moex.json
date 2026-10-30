@@ -1,0 +1,5 @@
+{
+  "securities": {"columns":["SECID","BOARDID","CURRENCYID","PREVLEGALCLOSEPRICE","PREVDATE","STATUS"],"data":[["TEST","TQBR","SUR",120.123456789012,"2026-09-25","A"],["BAD","TQBR","USD",120.123456789012,"2026-09-25","A"]]},
+  "marketdata": {"columns":["SECID","BOARDID","LAST","TIME","UPDATETIME","SYSTIME","NUMTRADES","TRADINGSTATUS"],"data":[["TEST","TQBR",123.456789012345,"18:59:54","19:00:00","2026-09-26 19:00:17",5,"N"],["BAD","TQBR",123.456789012345,"18:59:54","19:00:00","2026-09-26 19:00:17",5,"N"]]},
+  "dataversion": {"columns":["trade_date","trade_session_date","data_version"],"data":[["2026-09-26","2026-09-28",9007199254740993]]}
+}

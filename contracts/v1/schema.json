@@ -1,0 +1,1451 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mediacentre.invalid/contracts/v1/schema.json",
+  "$defs": {
+    "climateConfigRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "revision",
+        "poll_minutes",
+        "sensors"
+      ],
+      "properties": {
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "poll_minutes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 120
+        },
+        "sensors": {
+          "type": "array",
+          "maxItems": 3,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "address",
+              "name"
+            ],
+            "properties": {
+              "address": {
+                "type": "string",
+                "pattern": "^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 40
+              }
+            }
+          }
+        }
+      }
+    },
+    "climateReportRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "revision",
+        "sensors"
+      ],
+      "properties": {
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "sensors": {
+          "type": "array",
+          "maxItems": 3,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "address",
+              "latest",
+              "status"
+            ],
+            "properties": {
+              "address": {
+                "type": "string",
+                "pattern": "^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$"
+              },
+              "latest": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "temperature",
+                      "humidity",
+                      "battery_millivolts",
+                      "measured_at"
+                    ],
+                    "properties": {
+                      "temperature": {
+                        "type": "number",
+                        "minimum": -50,
+                        "maximum": 85
+                      },
+                      "humidity": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 100
+                      },
+                      "battery_millivolts": {
+                        "type": "integer",
+                        "minimum": 1500,
+                        "maximum": 4000
+                      },
+                      "measured_at": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 9007199254740991
+                      }
+                    }
+                  }
+                ]
+              },
+              "status": {
+                "enum": [
+                  "pending",
+                  "ok",
+                  "unavailable",
+                  "bluetooth_off"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "decimal": {
+      "type": "string",
+      "pattern": "^-?(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?$",
+      "maxLength": 40
+    },
+    "price": {
+      "type": "string",
+      "pattern": "^(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?$",
+      "maxLength": 40
+    },
+    "utc": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "uuid": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "freshness": {
+      "enum": [
+        "fresh",
+        "empty",
+        "partial",
+        "stale"
+      ]
+    },
+    "location": {
+      "type": "object",
+      "properties": {
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "id": {
+          "$ref": "#/$defs/uuid"
+        },
+        "name": {
+          "type": "string"
+        },
+        "timezone": {
+          "type": "string",
+          "minLength": 1
+        },
+        "latitude": {
+          "$ref": "#/$defs/decimal"
+        },
+        "longitude": {
+          "$ref": "#/$defs/decimal"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "timezone"
+      ],
+      "additionalProperties": true
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "test_data": {
+          "type": "boolean"
+        },
+        "scenario": {
+          "enum": [
+            "success",
+            "empty",
+            "partial",
+            "stale",
+            "database"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "freshness": {
+          "$ref": "#/$defs/freshness"
+        },
+        "data_as_of": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/utc"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fetched_at": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/utc"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "valid_until": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/utc"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "test_data",
+        "scenario",
+        "revision",
+        "freshness",
+        "data_as_of",
+        "fetched_at",
+        "valid_until",
+        "source"
+      ],
+      "additionalProperties": true
+    },
+    "features": {
+      "type": "object",
+      "properties": {
+        "weather": {
+          "type": "boolean"
+        },
+        "radio": {
+          "type": "boolean"
+        },
+        "finance": {
+          "type": "boolean"
+        },
+        "photoframe": {
+          "type": "boolean"
+        },
+        "home": {
+          "const": false
+        }
+      },
+      "required": [
+        "weather",
+        "radio",
+        "finance",
+        "home"
+      ],
+      "additionalProperties": true
+    },
+    "preferences": {
+      "type": "object",
+      "properties": {
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "location": {
+          "$ref": "#/$defs/location"
+        },
+        "selected_station_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/uuid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "radio_volume": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "display_title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 24
+        }
+      },
+      "required": [
+        "revision",
+        "location",
+        "selected_station_id",
+        "radio_volume"
+      ],
+      "additionalProperties": true
+    },
+    "current": {
+      "type": "object",
+      "properties": {
+        "temperature_c": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/decimal"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "condition": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "temperature_c",
+        "condition"
+      ],
+      "additionalProperties": true
+    },
+    "day": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "$ref": "#/$defs/date"
+        },
+        "temp_min_c": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/decimal"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "temp_max_c": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/decimal"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "precipitation_mm": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/price"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "condition": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "date",
+        "temp_min_c",
+        "temp_max_c",
+        "precipitation_mm",
+        "condition"
+      ],
+      "additionalProperties": true
+    },
+    "weatherData": {
+      "type": "object",
+      "properties": {
+        "location": {
+          "$ref": "#/$defs/location"
+        },
+        "current": {
+          "$ref": "#/$defs/current"
+        },
+        "days": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/day"
+          },
+          "maxItems": 14
+        },
+        "periods": {
+          "type": "array",
+          "maxItems": 6,
+          "items": {
+            "type": "object",
+            "properties": {
+              "at": {
+                "$ref": "#/$defs/utc"
+              },
+              "temperature_c": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/decimal"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "condition": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "at",
+              "temperature_c",
+              "condition"
+            ],
+            "additionalProperties": true
+          }
+        }
+      },
+      "required": [
+        "location",
+        "current",
+        "days"
+      ],
+      "additionalProperties": true
+    },
+    "instrument": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "id": {
+          "$ref": "#/$defs/uuid"
+        },
+        "kind": {
+          "enum": [
+            "currency",
+            "share"
+          ]
+        },
+        "symbol": {
+          "type": "string"
+        },
+        "board_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "currency": {
+          "const": "RUB"
+        },
+        "nominal": {
+          "$ref": "#/$defs/price"
+        },
+        "price": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/price"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "previous_price": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/price"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "change_percent": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/decimal"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "price_kind": {
+          "enum": [
+            "official_rate",
+            "last_trade",
+            "none"
+          ]
+        },
+        "rate_date": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/date"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "trade_at": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/utc"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "data_as_of": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/utc"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fetched_at": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/utc"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "valid_until": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/utc"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source": {
+          "type": "string"
+        },
+        "delay_minutes": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "$ref": "#/$defs/freshness"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "symbol",
+        "board_id",
+        "currency",
+        "nominal",
+        "price",
+        "previous_price",
+        "change_percent",
+        "price_kind",
+        "rate_date",
+        "trade_at",
+        "data_as_of",
+        "fetched_at",
+        "valid_until",
+        "source",
+        "delay_minutes",
+        "status"
+      ],
+      "additionalProperties": true
+    },
+    "financeData": {
+      "type": "object",
+      "properties": {
+        "base_currency": {
+          "const": "RUB"
+        },
+        "list_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/instrument"
+          }
+        }
+      },
+      "required": [
+        "base_currency",
+        "list_revision",
+        "items"
+      ],
+      "additionalProperties": true
+    },
+    "station": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/uuid"
+        },
+        "name": {
+          "type": "string"
+        },
+        "genre": {
+          "type": "string"
+        },
+        "genres": {
+          "type": "array",
+          "maxItems": 10,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 60
+          }
+        },
+        "country": {
+          "type": "string"
+        },
+        "stream_url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https?://"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "favorite": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "genre",
+        "country",
+        "stream_url",
+        "enabled",
+        "favorite"
+      ],
+      "additionalProperties": true
+    },
+    "bootstrapData": {
+      "type": "object",
+      "properties": {
+        "api_version": {
+          "const": "1"
+        },
+        "min_client_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "server_id": {
+          "$ref": "#/$defs/uuid"
+        },
+        "server_time": {
+          "$ref": "#/$defs/utc"
+        },
+        "features": {
+          "$ref": "#/$defs/features"
+        },
+        "polling": {
+          "type": "object",
+          "properties": {
+            "dashboard_seconds": {
+              "type": "integer",
+              "minimum": 10
+            },
+            "weather_seconds": {
+              "type": "integer",
+              "minimum": 60
+            },
+            "finance_seconds": {
+              "type": "integer",
+              "minimum": 60
+            },
+            "heartbeat_seconds": {
+              "type": "integer",
+              "minimum": 30
+            }
+          },
+          "required": [
+            "dashboard_seconds",
+            "weather_seconds",
+            "finance_seconds",
+            "heartbeat_seconds"
+          ],
+          "additionalProperties": true
+        },
+        "settings": {
+          "$ref": "#/$defs/preferences"
+        },
+        "finance_list_revision": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "api_version",
+        "min_client_version",
+        "server_id",
+        "server_time",
+        "features",
+        "polling",
+        "settings",
+        "finance_list_revision"
+      ],
+      "additionalProperties": true
+    },
+    "weather": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/$defs/weatherData"
+        },
+        "meta": {
+          "$ref": "#/$defs/meta"
+        }
+      },
+      "required": [
+        "data",
+        "meta"
+      ],
+      "additionalProperties": true
+    },
+    "finance": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/$defs/financeData"
+        },
+        "meta": {
+          "$ref": "#/$defs/meta"
+        }
+      },
+      "required": [
+        "data",
+        "meta"
+      ],
+      "additionalProperties": true
+    },
+    "bootstrap": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/$defs/bootstrapData"
+        },
+        "meta": {
+          "$ref": "#/$defs/meta"
+        }
+      },
+      "required": [
+        "data",
+        "meta"
+      ],
+      "additionalProperties": true
+    },
+    "preferencesResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/$defs/preferences"
+        },
+        "meta": {
+          "$ref": "#/$defs/meta"
+        }
+      },
+      "required": [
+        "data",
+        "meta"
+      ],
+      "additionalProperties": true
+    },
+    "dashboardData": {
+      "type": "object",
+      "properties": {
+        "weather": {
+          "$ref": "#/$defs/weather"
+        },
+        "finance": {
+          "$ref": "#/$defs/finance"
+        },
+        "radio": {
+          "type": "object",
+          "properties": {
+            "favorites": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/station"
+              }
+            },
+            "selected_station_id": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "favorites",
+            "selected_station_id"
+          ],
+          "additionalProperties": true
+        }
+      },
+      "required": [
+        "weather",
+        "finance",
+        "radio"
+      ],
+      "additionalProperties": true
+    },
+    "dashboard": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/$defs/dashboardData"
+        },
+        "meta": {
+          "$ref": "#/$defs/meta"
+        }
+      },
+      "required": [
+        "data",
+        "meta"
+      ],
+      "additionalProperties": true
+    },
+    "stationsData": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/station"
+          }
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "available_genres": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 60
+          }
+        }
+      },
+      "required": [
+        "items",
+        "total",
+        "limit",
+        "offset"
+      ],
+      "additionalProperties": true
+    },
+    "stations": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/$defs/stationsData"
+        },
+        "meta": {
+          "$ref": "#/$defs/meta"
+        }
+      },
+      "required": [
+        "data",
+        "meta"
+      ],
+      "additionalProperties": true
+    },
+    "stationResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/$defs/station"
+        },
+        "meta": {
+          "$ref": "#/$defs/meta"
+        }
+      },
+      "required": [
+        "data",
+        "meta"
+      ],
+      "additionalProperties": true
+    },
+    "favoriteData": {
+      "type": "object",
+      "properties": {
+        "station_id": {
+          "$ref": "#/$defs/uuid"
+        },
+        "favorite": {
+          "type": "boolean"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "station_id",
+        "favorite",
+        "revision"
+      ],
+      "additionalProperties": true
+    },
+    "favoriteResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/$defs/favoriteData"
+        },
+        "meta": {
+          "$ref": "#/$defs/meta"
+        }
+      },
+      "required": [
+        "data",
+        "meta"
+      ],
+      "additionalProperties": true
+    },
+    "preferencesPatch": {
+      "type": "object",
+      "properties": {
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "selected_station_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/uuid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "radio_volume": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        }
+      },
+      "required": [
+        "revision"
+      ],
+      "additionalProperties": false,
+      "minProperties": 2
+    },
+    "heartbeatRequest": {
+      "type": "object",
+      "properties": {
+        "client_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "uptime_seconds": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "current_screen": {
+          "enum": [
+            "home",
+            "weather",
+            "radio",
+            "stations",
+            "finance",
+            "settings",
+            "photoframe",
+            "climate",
+            "music"
+          ]
+        }
+      },
+      "required": [
+        "client_version",
+        "uptime_seconds",
+        "current_screen"
+      ],
+      "additionalProperties": false
+    },
+    "heartbeatData": {
+      "type": "object",
+      "properties": {
+        "received_at": {
+          "$ref": "#/$defs/utc"
+        },
+        "next_heartbeat_seconds": {
+          "type": "integer",
+          "minimum": 30
+        }
+      },
+      "required": [
+        "received_at",
+        "next_heartbeat_seconds"
+      ],
+      "additionalProperties": true
+    },
+    "heartbeatResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/$defs/heartbeatData"
+        },
+        "meta": {
+          "$ref": "#/$defs/meta"
+        }
+      },
+      "required": [
+        "data",
+        "meta"
+      ],
+      "additionalProperties": true
+    },
+    "pairRequest": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^[23456789ABCDEFGHJKLMNPQRSTUVWXYZ]{8}$"
+        },
+        "client_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "client_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        }
+      },
+      "required": [
+        "code",
+        "client_name",
+        "client_version"
+      ],
+      "additionalProperties": false
+    },
+    "pairData": {
+      "type": "object",
+      "properties": {
+        "client_id": {
+          "$ref": "#/$defs/uuid"
+        },
+        "server_id": {
+          "$ref": "#/$defs/uuid"
+        },
+        "token": {
+          "type": "string",
+          "minLength": 32
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "weather:read",
+              "radio:read",
+              "favorites:write",
+              "finance:read",
+              "photoframe:read",
+              "music:read",
+              "preferences:read",
+              "preferences:write",
+              "heartbeat:write"
+            ]
+          }
+        }
+      },
+      "required": [
+        "client_id",
+        "server_id",
+        "token",
+        "scopes"
+      ],
+      "additionalProperties": true
+    },
+    "pairResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/$defs/pairData"
+        },
+        "meta": {
+          "$ref": "#/$defs/meta"
+        }
+      },
+      "required": [
+        "data",
+        "meta"
+      ],
+      "additionalProperties": true
+    },
+    "error": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "enum": [
+                "UNAUTHORIZED",
+                "INVALID_PAIRING",
+                "TOO_MANY_REQUESTS",
+                "FORBIDDEN",
+                "NOT_FOUND",
+                "METHOD_NOT_ALLOWED",
+                "INVALID_REQUEST",
+                "PRECONDITION_REQUIRED",
+                "REVISION_CONFLICT",
+                "NOT_IMPLEMENTED",
+                "NOT_READY",
+                "INTERNAL_ERROR"
+              ]
+            },
+            "message": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message"
+          ],
+          "additionalProperties": true
+        },
+        "request_id": {
+          "$ref": "#/$defs/uuid"
+        }
+      },
+      "required": [
+        "error",
+        "request_id"
+      ],
+      "additionalProperties": true
+    },
+    "musicTrack": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "artist",
+        "album",
+        "bytes",
+        "url"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/uuid"
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "artist": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 255
+        },
+        "album": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 255
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "url": {
+          "type": "string",
+          "pattern": "^/api/v1/music/stream/[a-fA-F0-9-]{36}/[1-9][0-9]{0,17}/[a-fA-F0-9-]{36}$"
+        }
+      }
+    },
+    "musicLibrariesResponse": {
+      "type": "object",
+      "required": [
+        "data",
+        "meta"
+      ],
+      "properties": {
+        "data": {
+          "type": "object",
+          "required": [
+            "items"
+          ],
+          "properties": {
+            "items": {
+              "type": "array",
+              "maxItems": 32,
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "enabled",
+                  "revision",
+                  "generation",
+                  "scan_status",
+                  "scanned_files",
+                  "skipped_files",
+                  "error_code",
+                  "scanned_at",
+                  "tracks"
+                ],
+                "properties": {
+                  "id": {
+                    "$ref": "#/$defs/uuid"
+                  },
+                  "name": {
+                    "type": "string",
+                    "maxLength": 80,
+                    "minLength": 1
+                  },
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "revision": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991
+                  },
+                  "generation": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "scan_status": {
+                    "enum": [
+                      "queued",
+                      "scanning",
+                      "ready",
+                      "failed"
+                    ]
+                  },
+                  "scanned_files": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "skipped_files": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "error_code": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "maxLength": 40
+                  },
+                  "scanned_at": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "tracks": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                }
+              }
+            }
+          }
+        },
+        "meta": {
+          "$ref": "#/$defs/meta"
+        }
+      }
+    },
+    "musicBrowseResponse": {
+      "type": "object",
+      "required": [
+        "data",
+        "meta"
+      ],
+      "properties": {
+        "data": {
+          "type": "object",
+          "required": [
+            "library",
+            "generation",
+            "folder",
+            "parent",
+            "name",
+            "folders",
+            "folder_total",
+            "items",
+            "total",
+            "offset",
+            "limit"
+          ],
+          "properties": {
+            "library": {
+              "$ref": "#/$defs/uuid"
+            },
+            "generation": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "folder": {
+              "$ref": "#/$defs/uuid"
+            },
+            "parent": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "name": {
+              "type": "string",
+              "maxLength": 255
+            },
+            "folders": {
+              "type": "array",
+              "maxItems": 50,
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name"
+                ],
+                "properties": {
+                  "id": {
+                    "$ref": "#/$defs/uuid"
+                  },
+                  "name": {
+                    "type": "string",
+                    "maxLength": 255
+                  }
+                }
+              }
+            },
+            "folder_total": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "items": {
+              "type": "array",
+              "maxItems": 50,
+              "items": {
+                "$ref": "#/$defs/musicTrack"
+              }
+            },
+            "total": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "offset": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000000
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            }
+          }
+        },
+        "meta": {
+          "$ref": "#/$defs/meta"
+        }
+      }
+    }
+  }
+}

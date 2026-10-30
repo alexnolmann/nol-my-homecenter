@@ -1,0 +1,6 @@
+<resources>
+    <item name="theme_binding" type="id" />
+    <item name="mini_player_mute" type="id" />
+    <item name="radio_mute" type="id" />
+    <item name="music_mute" type="id" />
+</resources>

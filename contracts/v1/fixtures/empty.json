@@ -1,0 +1,123 @@
+{
+  "bootstrap": {
+    "data": {
+      "api_version": "1",
+      "min_client_version": 1,
+      "server_id": "10000000-0000-4000-8000-000000000100",
+      "server_time": "2026-09-27T08:00:00Z",
+      "features": {
+        "weather": true,
+        "radio": true,
+        "finance": true,
+        "home": false
+      },
+      "polling": {
+        "dashboard_seconds": 30,
+        "weather_seconds": 300,
+        "finance_seconds": 300,
+        "heartbeat_seconds": 60
+      },
+      "settings": {
+        "revision": 1,
+        "location": {
+          "id": "10000000-0000-4000-8000-000000000001",
+          "name": "Санкт-Петербург",
+          "timezone": "Europe/Moscow"
+        },
+        "selected_station_id": null,
+        "radio_volume": 40
+      },
+      "finance_list_revision": 1,
+      "future_bootstrap_field": true
+    },
+    "meta": {
+      "test_data": true,
+      "scenario": "empty",
+      "revision": 1,
+      "freshness": "empty",
+      "data_as_of": null,
+      "fetched_at": "2026-09-27T08:00:00Z",
+      "valid_until": "2026-09-27T08:15:00Z",
+      "source": "synthetic H1 fixture",
+      "future_meta_field": "ignore me"
+    }
+  },
+  "weather": {
+    "data": {
+      "location": {
+        "id": "10000000-0000-4000-8000-000000000001",
+        "name": "Санкт-Петербург",
+        "timezone": "Europe/Moscow"
+      },
+      "current": {
+        "temperature_c": null,
+        "condition": "unknown"
+      },
+      "days": []
+    },
+    "meta": {
+      "test_data": true,
+      "scenario": "empty",
+      "revision": 1,
+      "freshness": "empty",
+      "data_as_of": null,
+      "fetched_at": "2026-09-27T08:00:00Z",
+      "valid_until": "2026-09-27T08:15:00Z",
+      "source": "synthetic H1 fixture",
+      "future_meta_field": "ignore me"
+    }
+  },
+  "finance": {
+    "data": {
+      "base_currency": "RUB",
+      "list_revision": 1,
+      "items": []
+    },
+    "meta": {
+      "test_data": true,
+      "scenario": "empty",
+      "revision": 1,
+      "freshness": "empty",
+      "data_as_of": null,
+      "fetched_at": "2026-09-27T08:00:00Z",
+      "valid_until": "2026-09-27T08:15:00Z",
+      "source": "synthetic H1 fixture",
+      "future_meta_field": "ignore me"
+    }
+  },
+  "preferences": {
+    "data": {
+      "revision": 1,
+      "location": {
+        "id": "10000000-0000-4000-8000-000000000001",
+        "name": "Санкт-Петербург",
+        "timezone": "Europe/Moscow"
+      },
+      "selected_station_id": null,
+      "radio_volume": 40
+    },
+    "meta": {
+      "test_data": true,
+      "scenario": "empty",
+      "revision": 1,
+      "freshness": "empty",
+      "data_as_of": null,
+      "fetched_at": "2026-09-27T08:00:00Z",
+      "valid_until": "2026-09-27T08:15:00Z",
+      "source": "synthetic H1 fixture",
+      "future_meta_field": "ignore me"
+    }
+  },
+  "stations": [],
+  "meta": {
+    "test_data": true,
+    "scenario": "empty",
+    "revision": 1,
+    "freshness": "empty",
+    "data_as_of": null,
+    "fetched_at": "2026-09-27T08:00:00Z",
+    "valid_until": "2026-09-27T08:15:00Z",
+    "source": "synthetic H1 fixture",
+    "future_meta_field": "ignore me"
+  }
+}

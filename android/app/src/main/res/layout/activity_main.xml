@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="match_parent"
+    android:id="@+id/panel_root" android:background="#F2F6FC">
+    <LinearLayout android:id="@+id/navigation" android:orientation="vertical" android:layout_width="184dp" android:layout_height="match_parent" android:padding="12dp" android:background="#EAF1FB" />
+    <LinearLayout android:id="@+id/panel_body" android:orientation="vertical" android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" android:padding="24dp">
+    <LinearLayout android:id="@+id/panel_header" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="56dp">
+        <TextView android:id="@+id/heading" android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" android:textSize="30sp" android:textColor="#eaf4f1" />
+        <local.mediacentre.client.ui.AudioOutputControls android:id="@+id/audio_output" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginRight="16dp" />
+        <TextClock android:id="@+id/header_clock" android:layout_width="100dp" android:layout_height="match_parent" android:format24Hour="HH:mm" android:format12Hour="HH:mm" android:textSize="26sp" android:textColor="#84cdbc" android:gravity="right|center_vertical" />
+        <local.mediacentre.client.ui.WeatherRefreshButton android:id="@+id/weather_refresh" android:layout_width="52dp" android:layout_height="52dp" android:layout_marginLeft="12dp" android:visibility="gone" android:contentDescription="weather_refresh" />
+    </LinearLayout>
+    <TextView android:id="@+id/status" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="16sp" android:textColor="#4D627D" android:paddingBottom="12dp" />
+    <LinearLayout android:id="@+id/controls" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content" />
+    <ScrollView android:id="@+id/content_scroll" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:fillViewport="true" android:clipToPadding="false">
+        <LinearLayout android:id="@+id/content" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content" />
+    </ScrollView>
+    <LinearLayout android:id="@+id/mini_player" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="72dp" android:layout_marginTop="12dp" android:gravity="center_vertical" android:padding="10dp" />
+    <LinearLayout android:id="@+id/footer_status" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:visibility="gone" android:gravity="center_vertical" android:paddingTop="4dp">
+        <TextView android:id="@+id/weather_source_credit" android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxWidth="240dp" android:singleLine="true" android:ellipsize="end" android:textSize="12sp" android:textColor="#4D627D" />
+        <TextView android:id="@+id/weather_service_status" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:gravity="right|center_vertical" android:singleLine="true" android:ellipsize="end" android:textSize="13sp" android:textColor="#4D627D" />
+    </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

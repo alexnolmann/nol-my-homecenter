@@ -1,0 +1,347 @@
+{
+  "bootstrap": {
+    "data": {
+      "api_version": "1",
+      "min_client_version": 1,
+      "server_id": "10000000-0000-4000-8000-000000000100",
+      "server_time": "2026-09-20T08:00:00Z",
+      "features": {
+        "weather": true,
+        "radio": true,
+        "finance": true,
+        "home": false
+      },
+      "polling": {
+        "dashboard_seconds": 30,
+        "weather_seconds": 300,
+        "finance_seconds": 300,
+        "heartbeat_seconds": 60
+      },
+      "settings": {
+        "revision": 1,
+        "location": {
+          "id": "10000000-0000-4000-8000-000000000001",
+          "name": "Санкт-Петербург",
+          "timezone": "Europe/Moscow"
+        },
+        "selected_station_id": "10000000-0000-4000-8000-000000000010",
+        "radio_volume": 40
+      },
+      "finance_list_revision": 1,
+      "future_bootstrap_field": true
+    },
+    "meta": {
+      "test_data": true,
+      "scenario": "stale",
+      "revision": 1,
+      "freshness": "stale",
+      "data_as_of": "2026-09-20T07:45:00Z",
+      "fetched_at": "2026-09-20T08:00:00Z",
+      "valid_until": "2026-09-20T08:15:00Z",
+      "source": "synthetic H1 fixture",
+      "future_meta_field": "ignore me"
+    }
+  },
+  "weather": {
+    "data": {
+      "location": {
+        "id": "10000000-0000-4000-8000-000000000001",
+        "name": "Санкт-Петербург",
+        "timezone": "Europe/Moscow"
+      },
+      "current": {
+        "temperature_c": "14.5",
+        "condition": "cloudy"
+      },
+      "days": [
+        {
+          "date": "2026-09-20",
+          "temp_min_c": "7.5",
+          "temp_max_c": "12.0",
+          "precipitation_mm": "0",
+          "condition": "cloudy",
+          "future_day_field": 42
+        },
+        {
+          "date": "2026-09-21",
+          "temp_min_c": "8.5",
+          "temp_max_c": "13.0",
+          "precipitation_mm": "1.25",
+          "condition": "rain",
+          "future_day_field": 42
+        },
+        {
+          "date": "2026-09-22",
+          "temp_min_c": "9.5",
+          "temp_max_c": "14.0",
+          "precipitation_mm": "0",
+          "condition": "cloudy",
+          "future_day_field": 42
+        },
+        {
+          "date": "2026-09-23",
+          "temp_min_c": "10.5",
+          "temp_max_c": "15.0",
+          "precipitation_mm": "1.25",
+          "condition": "rain",
+          "future_day_field": 42
+        },
+        {
+          "date": "2026-09-24",
+          "temp_min_c": "11.5",
+          "temp_max_c": "16.0",
+          "precipitation_mm": "0",
+          "condition": "cloudy",
+          "future_day_field": 42
+        },
+        {
+          "date": "2026-09-25",
+          "temp_min_c": "12.5",
+          "temp_max_c": "17.0",
+          "precipitation_mm": "1.25",
+          "condition": "rain",
+          "future_day_field": 42
+        },
+        {
+          "date": "2026-09-26",
+          "temp_min_c": "13.5",
+          "temp_max_c": "18.0",
+          "precipitation_mm": "0",
+          "condition": "cloudy",
+          "future_day_field": 42
+        }
+      ]
+    },
+    "meta": {
+      "test_data": true,
+      "scenario": "stale",
+      "revision": 1,
+      "freshness": "stale",
+      "data_as_of": "2026-09-20T07:45:00Z",
+      "fetched_at": "2026-09-20T08:00:00Z",
+      "valid_until": "2026-09-20T08:15:00Z",
+      "source": "synthetic H1 fixture",
+      "future_meta_field": "ignore me"
+    }
+  },
+  "finance": {
+    "data": {
+      "base_currency": "RUB",
+      "list_revision": 1,
+      "items": [
+        {
+          "id": "10000000-0000-4000-8000-000000000020",
+          "kind": "currency",
+          "symbol": "USD",
+          "board_id": null,
+          "currency": "RUB",
+          "nominal": "1",
+          "price": "100.0001",
+          "previous_price": "99.0000",
+          "change_percent": "1.2500",
+          "price_kind": "official_rate",
+          "rate_date": "2026-09-20",
+          "trade_at": null,
+          "data_as_of": "2026-09-20T07:30:00Z",
+          "fetched_at": "2026-09-20T08:00:00Z",
+          "valid_until": "2026-09-20T08:15:00Z",
+          "source": "CBR (synthetic)",
+          "delay_minutes": null,
+          "status": "stale",
+          "future_instrument_field": {
+            "unknown": true
+          }
+        },
+        {
+          "id": "10000000-0000-4000-8000-000000000021",
+          "kind": "currency",
+          "symbol": "EUR",
+          "board_id": null,
+          "currency": "RUB",
+          "nominal": "1",
+          "price": "110.0002",
+          "previous_price": "99.0000",
+          "change_percent": "1.2500",
+          "price_kind": "official_rate",
+          "rate_date": "2026-09-20",
+          "trade_at": null,
+          "data_as_of": "2026-09-20T07:30:00Z",
+          "fetched_at": "2026-09-20T08:00:00Z",
+          "valid_until": "2026-09-20T08:15:00Z",
+          "source": "CBR (synthetic)",
+          "delay_minutes": null,
+          "status": "stale",
+          "future_instrument_field": {
+            "unknown": true
+          }
+        },
+        {
+          "id": "10000000-0000-4000-8000-000000000022",
+          "kind": "currency",
+          "symbol": "CNY",
+          "board_id": null,
+          "currency": "RUB",
+          "nominal": "1",
+          "price": "15.0003",
+          "previous_price": "99.0000",
+          "change_percent": "1.2500",
+          "price_kind": "official_rate",
+          "rate_date": "2026-09-20",
+          "trade_at": null,
+          "data_as_of": "2026-09-20T07:30:00Z",
+          "fetched_at": "2026-09-20T08:00:00Z",
+          "valid_until": "2026-09-20T08:15:00Z",
+          "source": "CBR (synthetic)",
+          "delay_minutes": null,
+          "status": "stale",
+          "future_instrument_field": {
+            "unknown": true
+          }
+        },
+        {
+          "id": "10000000-0000-4000-8000-000000000023",
+          "kind": "share",
+          "symbol": "SBER",
+          "board_id": "TQBR",
+          "currency": "RUB",
+          "nominal": "1",
+          "price": "123.4500",
+          "previous_price": "120.0000",
+          "change_percent": "1.2500",
+          "price_kind": "last_trade",
+          "rate_date": null,
+          "trade_at": "2026-09-20T07:30:00Z",
+          "data_as_of": "2026-09-20T07:30:00Z",
+          "fetched_at": "2026-09-20T08:00:00Z",
+          "valid_until": "2026-09-20T08:15:00Z",
+          "source": "MOEX ISS (synthetic)",
+          "delay_minutes": 15,
+          "status": "stale",
+          "future_instrument_field": {
+            "unknown": true
+          }
+        },
+        {
+          "id": "10000000-0000-4000-8000-000000000024",
+          "kind": "share",
+          "symbol": "GAZP",
+          "board_id": "TQBR",
+          "currency": "RUB",
+          "nominal": "1",
+          "price": "234.5600",
+          "previous_price": "120.0000",
+          "change_percent": "1.2500",
+          "price_kind": "last_trade",
+          "rate_date": null,
+          "trade_at": "2026-09-20T07:30:00Z",
+          "data_as_of": "2026-09-20T07:30:00Z",
+          "fetched_at": "2026-09-20T08:00:00Z",
+          "valid_until": "2026-09-20T08:15:00Z",
+          "source": "MOEX ISS (synthetic)",
+          "delay_minutes": 15,
+          "status": "stale",
+          "future_instrument_field": {
+            "unknown": true
+          }
+        },
+        {
+          "id": "10000000-0000-4000-8000-000000000025",
+          "kind": "share",
+          "symbol": "LKOH",
+          "board_id": "TQBR",
+          "currency": "RUB",
+          "nominal": "1",
+          "price": "9876.543210987",
+          "previous_price": "120.0000",
+          "change_percent": "1.2500",
+          "price_kind": "last_trade",
+          "rate_date": null,
+          "trade_at": "2026-09-20T07:30:00Z",
+          "data_as_of": "2026-09-20T07:30:00Z",
+          "fetched_at": "2026-09-20T08:00:00Z",
+          "valid_until": "2026-09-20T08:15:00Z",
+          "source": "MOEX ISS (synthetic)",
+          "delay_minutes": 15,
+          "status": "stale",
+          "future_instrument_field": {
+            "unknown": true
+          }
+        }
+      ]
+    },
+    "meta": {
+      "test_data": true,
+      "scenario": "stale",
+      "revision": 1,
+      "freshness": "stale",
+      "data_as_of": "2026-09-20T07:45:00Z",
+      "fetched_at": "2026-09-20T08:00:00Z",
+      "valid_until": "2026-09-20T08:15:00Z",
+      "source": "synthetic H1 fixture",
+      "future_meta_field": "ignore me"
+    }
+  },
+  "preferences": {
+    "data": {
+      "revision": 1,
+      "location": {
+        "id": "10000000-0000-4000-8000-000000000001",
+        "name": "Санкт-Петербург",
+        "timezone": "Europe/Moscow"
+      },
+      "selected_station_id": "10000000-0000-4000-8000-000000000010",
+      "radio_volume": 40
+    },
+    "meta": {
+      "test_data": true,
+      "scenario": "stale",
+      "revision": 1,
+      "freshness": "stale",
+      "data_as_of": "2026-09-20T07:45:00Z",
+      "fetched_at": "2026-09-20T08:00:00Z",
+      "valid_until": "2026-09-20T08:15:00Z",
+      "source": "synthetic H1 fixture",
+      "future_meta_field": "ignore me"
+    }
+  },
+  "stations": [
+    {
+      "id": "10000000-0000-4000-8000-000000000010",
+      "name": "Север · тестовая станция",
+      "genre": "Ambient",
+      "country": "RU",
+      "stream_url": "https://example.invalid/north.mp3",
+      "enabled": true,
+      "favorite": true
+    },
+    {
+      "id": "10000000-0000-4000-8000-000000000011",
+      "name": "Джаз · тестовая станция",
+      "genre": "Jazz",
+      "country": "RU",
+      "stream_url": "https://example.invalid/jazz.mp3",
+      "enabled": true,
+      "favorite": false
+    },
+    {
+      "id": "10000000-0000-4000-8000-000000000012",
+      "name": "Классика · тестовая станция",
+      "genre": "Classical",
+      "country": "RU",
+      "stream_url": "https://example.invalid/classical.mp3",
+      "enabled": true,
+      "favorite": true
+    }
+  ],
+  "meta": {
+    "test_data": true,
+    "scenario": "stale",
+    "revision": 1,
+    "freshness": "stale",
+    "data_as_of": "2026-09-20T07:45:00Z",
+    "fetched_at": "2026-09-20T08:00:00Z",
+    "valid_until": "2026-09-20T08:15:00Z",
+    "source": "synthetic H1 fixture",
+    "future_meta_field": "ignore me"
+  }
+}
