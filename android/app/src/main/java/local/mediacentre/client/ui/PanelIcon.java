@@ -3,10 +3,14 @@ import android.graphics.*;
 import android.graphics.drawable.Drawable;
 /** Small local line icons drawn directly on API 19; no raster decoding or animation. */
 final class PanelIcon extends Drawable {
-    private final String kind;private final int tint,size;private final Paint p=new Paint(3);
+    private final String kind;private final int tint,size;private final Paint p=new Paint(3);private final Path play=new Path();
     PanelIcon(String kind,int tint,int size){this.kind=kind;this.tint=tint;this.size=size;}
     private void line(Canvas c,float... xy){Path path=new Path();path.moveTo(xy[0],xy[1]);for(int n=2;n<xy.length;n+=2)path.lineTo(xy[n],xy[n+1]);c.drawPath(path,p);}
-    @Override public void draw(Canvas canvas){canvas.save();canvas.translate(getBounds().left,getBounds().top);canvas.scale(getBounds().width()/24f,getBounds().height()/24f);p.setColor(tint);p.setStyle(Paint.Style.STROKE);p.setStrokeWidth(1.7f);p.setStrokeCap(Paint.Cap.ROUND);p.setStrokeJoin(Paint.Join.ROUND);
+    @Override public void draw(Canvas canvas){
+        // KitKat may enlarge a low-resolution path mask when the Canvas is scaled.
+        // Build the play triangle at its final pixel size, like the home controls.
+        if("play".equals(kind)){Rect b=getBounds();float x=b.left+b.width()/3f,top=b.top+b.height()/6f,right=b.left+b.width()*5f/6f,bottom=b.bottom-b.height()/6f;play.rewind();play.moveTo(x,top);play.lineTo(right,b.exactCenterY());play.lineTo(x,bottom);play.close();p.setColor(tint);p.setStyle(Paint.Style.FILL);canvas.drawPath(play,p);return;}
+        canvas.save();canvas.translate(getBounds().left,getBounds().top);canvas.scale(getBounds().width()/24f,getBounds().height()/24f);p.setColor(tint);p.setStyle(Paint.Style.STROKE);p.setStrokeWidth(1.7f);p.setStrokeCap(Paint.Cap.ROUND);p.setStrokeJoin(Paint.Join.ROUND);
         switch(kind){
         case "search":canvas.drawCircle(10,10,7,p);line(canvas,15,15,22,22);break;
         case "home":line(canvas,3,11,12,3,21,11,21,21,15,21,15,14,9,14,9,21,3,21,3,11);break;
@@ -39,7 +43,6 @@ final class PanelIcon extends Drawable {
         case "settings":canvas.drawCircle(12,12,6,p);canvas.drawCircle(12,12,2,p);for(int n=0;n<8;n++){canvas.save();canvas.rotate(n*45,12,12);line(canvas,12,2,12,5);canvas.restore();}break;
         case "photoframe":canvas.drawRoundRect(new RectF(2,4,22,20),2,2,p);canvas.drawCircle(8,9,1.5f,p);line(canvas,3,17,9,12,13,16,16,13,21,18);break;
         case "check":line(canvas,5,12,10,17,20,6);break;
-        case "play":p.setStyle(Paint.Style.FILL);line(canvas,8,4,20,12,8,20,8,4);break;
         case "stop":p.setStyle(Paint.Style.FILL);canvas.drawRoundRect(new RectF(6,6,18,18),2,2,p);break;
         default:cloud(canvas);
         }canvas.restore();}
