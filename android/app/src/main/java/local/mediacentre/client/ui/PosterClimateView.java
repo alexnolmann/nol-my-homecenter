@@ -54,7 +54,7 @@ final class PosterClimateView extends PosterPageView {
 
     PosterClimateView(Context c,TextClock clock,AudioOutputControls output,WeatherRefreshButton refresh,
             View miniRoot,TextView miniName,View waveform,View toggle,VolumeButton mute,SeekBar slider,TextView volume,
-            View statusRoot,TextView status){
+            View statusRoot){
         super(c);setWillNotDraw(false);setClipChildren(true);
         PanelStyle palette=new PanelStyle(c);boolean dark=palette.palette.dark;
         ink=dark?palette.color(PanelStyle.TEXT):0xff050d15;muted=dark?0xffb8c9df:0xff536274;
@@ -75,7 +75,6 @@ final class PosterClimateView extends PosterPageView {
         ImageView badge=new ImageView(c);badge.setImageBitmap(ClimateRoomArt.bitmap(c,ClimateRoomArt.OFFICE));badge.setScaleType(ImageView.ScaleType.CENTER_CROP);badge.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO);place(badge,14,902,63,63,0);
         if(dark)badge.setColorFilter(0x18050d1c,PorterDuff.Mode.SRC_ATOP);
         PosterMiniPlayer.bind(c,this::take,miniName,waveform,(Button)toggle,mute,slider,volume,-10);
-        take(status,24,973,1423,18,12);status.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);status.setIncludeFontPadding(false);
     }
 
     void tools(Button add,View conflicts){
